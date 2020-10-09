@@ -50,7 +50,7 @@ def linear_program(c, A, b, rho, alpha):
                   '%10.4f\t' % history['eps_pri'][k], '%10.4f' % history['objval'][k])
 
         if (history['r_norm'][k] < history['eps_pri'][k]) and (history['s_norm'][k] < history['eps_dual'][k]):
-            print("Convergence")
+            print("Convergence at k=", k)
             break
 
     if not QUIET:
@@ -63,33 +63,42 @@ def objective(c, x):
     return c.conj().transpose() @ x
 
 
-seed(0)
+def main():
+    seed(0)
+    n = 500
+    m = 400
 
-n = 500
-m = 400
+    c = rand(n, 1) + 0.5
+    x0 = abs(randn(n, 1))
+    A = abs(randn(m, n))
+    b = A @ x0
 
-c = rand(n, 1) + 0.5
-x0 = abs(randn(n, 1))
-A = abs(randn(m, n))
-b = A @ x0
+    print(A)
 
-[x, history] = linear_program(c, A, b, 1.0, 1.0)
+    [_, history] = linear_program(c, A, b, 1.0, 1.0)
 
-plt.plot(history['iter'], history['objval'])
-plt.ylabel('obj')
-plt.xlabel('iter')
-plt.show()
 
-plt.plot(history['iter'], history['r_norm'])
-plt.plot(history['iter'], history['eps_pri'], 'k--')
-plt.ylabel('||r||_2')
-plt.xlabel('iter')
-plt.yscale('log')
-plt.show()
+    plt.plot(history['iter'], history['objval'])
+    plt.ylabel('obj')
+    plt.xlabel('iter')
+    plt.show()
 
-plt.plot(history['iter'], history['s_norm'])
-plt.plot(history['iter'], history['eps_dual'], 'k--')
-plt.ylabel('||s||_2')
-plt.xlabel('iter')
-plt.yscale('log')
-plt.show()
+    plt.plot(history['iter'], history['r_norm'])
+    plt.plot(history['iter'], history['eps_pri'], 'k--')
+    plt.ylabel('||r||_2')
+    plt.xlabel('iter')
+    plt.yscale('log')
+    plt.show()
+
+    plt.plot(history['iter'], history['s_norm'])
+    plt.plot(history['iter'], history['eps_dual'], 'k--')
+    plt.ylabel('||s||_2')
+    plt.xlabel('iter')
+    plt.yscale('log')
+    plt.show()
+
+
+if __name__ == '__main__':
+    main()
+
+

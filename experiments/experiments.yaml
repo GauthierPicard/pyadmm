@@ -1,0 +1,32 @@
+file: None
+
+dir: exp/
+path: .
+log: experiments.log
+results: results.csv
+
+metaparameters:
+  RHO: 4.0
+  ALPHA: 1.8
+  ABSOLUTE_TOLERANCE: 1e-4
+  RELATIVE_TOLERANCE: 1e-2
+  MAX_ITER: 100
+  THRESHOLD: 1.0
+  MU: 10
+  TAU_INCR: 2
+  TAU_DECR: 2
+
+parameters:
+  nb_agents_range: range(4, 11, 1)
+  nb_vars_range: range(10, 21, 1)
+  nb_shared_vars_range: range(2, 11, 5)
+  seed_range: range(10)
+  rho_range: range(1, 11, 1)
+  alpha_range: range(1.5, 1.9, 0.1)
+  tau_incr: range(2, 3, 1)
+  tau_decr: range(2, 3, 1)
+  mu: range(10, 11, 1)
+
+solvers: [opt, admm]
+
+generators: [generate_general_form_consensus_ilp]
